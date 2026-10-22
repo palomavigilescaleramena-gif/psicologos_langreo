@@ -1,3 +1,71 @@
+
+# ── Dependencias ──────────────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ── Builds / dist ─────────────────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vite/
+.parcel-cache/
+
+# ── Variables de entorno ──────────────────────────────────────────
+.env
+.env.*
+.env.local
+.env.*.local
+
+# ── Logs ──────────────────────────────────────────────────────────
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── macOS ─────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# ── Windows ───────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ── Editores ──────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# ── Herramientas de análisis y testing ───────────────────────────
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# ── Archivos temporales del proyecto ─────────────────────────────
+*.tmp
+*.temp
+_*temp*
+
+# ── Secretos y config local de Claude ─────────────────────────────
+*.env
+.claude/settings.local.json
+
 .env
 .env.*
 !.env.example
