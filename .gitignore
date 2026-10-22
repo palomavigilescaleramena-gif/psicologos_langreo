@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+*.key
+node_modules/
+referencias/
+assets/img/_originales/
+dist/
+
+# Material interno (no publicar)
+BRIEF.md
+ESTADO.md
+materiales-cliente/

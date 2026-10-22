@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --blue: #185B89;
+  --ink: #1F242A;
+  --teal: #2B9397;
+  --olive: #819656;
+  --clay: #B34B35;
+  --mustard: #DAA845;
+  --white: #fff;
+  --black: #000;
+  --font-brand: "Plus Jakarta Sans", Arial, sans-serif;
+  --header-height: 5.5rem;
+  --ease-salida: cubic-bezier(.2, .8, .2, 1);
+  --dur-media: 500ms;
+}
