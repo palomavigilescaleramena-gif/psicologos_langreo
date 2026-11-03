@@ -53,35 +53,8 @@
 .for-you-copy__label { display: flex; align-items: flex-start; gap: 1rem; color: var(--clay); font-size: clamp(4rem, 8vw, 8rem); line-height: .9; font-weight: 700; }
 .for-you-copy__text { max-width: 55rem; }
 .for-you-copy__text p { margin: 0 0 2rem; font-size: clamp(1.25rem, 2vw, 1.85rem); line-height: 1.5; letter-spacing: -.025em; }
-.for-you-copy__text p:first-child { font-size: clamp(1.6rem, 2.7vw, 2.5rem); line-height: 1.35; font-weight: 600; }
 
 .contact-grid { display: grid; grid-template-columns: minmax(17rem, .72fr) minmax(0, 1.28fr); gap: clamp(3rem, 8vw, 9rem); padding-top: clamp(3rem, 6vw, 6rem); }
-.contact-info { display: flex; flex-direction: column; gap: 2rem; }
-.contact-info > div { padding-top: 1rem; border-top: 1px solid var(--ink); }
-.contact-info > div:first-child { padding-top: 0; border-top: 0; }
-.contact-info span { display: block; margin-bottom: .65rem; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.contact-info a, .contact-info strong { display: block; font-size: clamp(1.3rem, 2vw, 2rem); line-height: 1.3; letter-spacing: -.035em; font-weight: 600; text-decoration: none; overflow-wrap: anywhere; }
-.contact-info a:hover, .contact-info a:focus-visible { color: var(--blue); }
-.contact-info__social { display: flex; flex-wrap: wrap; gap: .75rem; margin: .25rem 0 0; padding: 0; list-style: none; }
-.contact-info .contact-info__social a { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--ink); color: var(--white); transition: background-color .3s ease; }
-.contact-info .contact-info__social a:hover, .contact-info .contact-info__social a:focus-visible { background: var(--blue); color: var(--white); }
-.contact-info__social svg { width: auto; height: 1.25rem; }
-.contact-info__map { margin-top: .8rem; font-size: 1rem !important; }
-.contact-form { padding: clamp(1.5rem, 4vw, 4rem); border-radius: 14px; background: var(--blue); color: var(--white); }
-.contact-form h2 { margin: 0 0 1.8rem; font-size: clamp(2rem, 4vw, 4rem); line-height: 1.05; letter-spacing: -.05em; }
-.contact-form label { display: block; margin: 1.2rem 0 .45rem; font-size: .9rem; font-weight: 700; }
-.contact-form input, .contact-form textarea { display: block; width: 100%; padding: .9rem 1rem; border: 2px solid var(--white); border-radius: 8px; background: var(--white); color: var(--ink); font: inherit; font-size: 1rem; }
-.contact-form textarea { min-height: 10rem; resize: vertical; }
-.contact-form input:focus-visible, .contact-form textarea:focus-visible { outline: 3px solid var(--mustard); outline-offset: 3px; }
-.contact-form__note { max-width: 36rem; margin: 1.3rem 0; font-size: .875rem; line-height: 1.5; }
-.contact-form .button { width: 100%; justify-content: center; padding: 16px 28px; border: 0; cursor: pointer; }
-.contact-form__consent { display: flex; align-items: flex-start; gap: .75rem; margin-top: 1.5rem; }
-.contact-form__consent input { flex: 0 0 auto; display: inline-block; width: 1.25rem; height: 1.25rem; margin: .1rem 0 0; padding: 0; border: 0; accent-color: var(--mustard); cursor: pointer; }
-.contact-form__consent label { margin: 0; font-size: .9375rem; font-weight: 600; line-height: 1.45; cursor: pointer; }
-.contact-form__consent input:focus-visible { outline: 3px solid var(--mustard); outline-offset: 3px; }
-.contact-form a { color: inherit; text-decoration: underline transparent; text-underline-offset: .2rem; }
-.contact-form a:hover, .contact-form a:focus-visible { text-decoration-color: currentColor; }
-.contact-form__legal { max-width: 36rem; margin: 1rem 0 0; font-size: .8125rem; line-height: 1.5; opacity: .9; }
 
 @media (max-width: 940px) {
   .interior-intro, .faq-layout, .for-you-copy, .contact-grid, .therapies-layout { grid-template-columns: 1fr; }
@@ -104,12 +77,17 @@
   .interior-cta { align-items: stretch; flex-direction: column; }
   .interior-cta--blue { margin: 2.5rem -20px -6rem; padding: 2.25rem 20px; }
   .for-you-copy__label { display: none; }
-  .contact-form { padding: 1.5rem; }
 }
 @media (prefers-reduced-motion: reduce) { .faq-item summary span { transition: none; } }
+/* Pedir ayuda y contacto: menos aire encima del titular */
+.interior:has(.interior-intro--wide-title), .interior:has(.interior-intro--portrait) { padding-top: clamp(2.5rem, 4vw, 4rem); }
 @media (min-width: 941px) {
   .interior-intro:has(.interior-intro__img) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .interior-intro__img { width: min(100%, clamp(360px, 44vw, 760px)); margin-bottom: calc(-1 * clamp(3rem, 6vw, 6rem)); }
+  /* Pedir ayuda: más ancho para el titular, que quede en tres líneas */
+  .interior-intro--wide-title:has(.interior-intro__img) { grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr); }
+  .interior-intro--wide-title { align-items: center; }
+  .interior-intro--wide-title .interior-intro__img { margin-bottom: 0; }
 }
 .legal { max-width: 52rem; padding-top: clamp(3rem, 6vw, 5.5rem); }
 .legal h2 { margin: clamp(2.75rem, 5vw, 4rem) 0 1.1rem; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.15; letter-spacing: -.05em; font-weight: 650; text-wrap: balance; }
@@ -150,3 +128,143 @@
 .for-you-group li strong { font-weight: 600; }
 @media (max-width: 940px) { .for-you-block { grid-template-columns: 1fr; } }
 @media (min-width: 1201px) { .for-you-groups { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Página de cada terapia: cabecero con el color de la terapia y texto en blanco */
+.therapy-hero { margin: calc(-1 * clamp(4rem, 8vw, 8rem)) calc(-1 * clamp(20px, 5.5vw, 96px)) clamp(3rem, 6vw, 5rem); padding: clamp(2rem, 3vw, 3rem) clamp(20px, 5.5vw, 96px) clamp(2rem, 3vw, 3rem); border-bottom: 0; background: var(--area); color: var(--white); }
+.therapy-hero__back { color: inherit; }
+.therapy--single { padding: 0; border-top: 0; }
+@media (max-width: 650px) { .therapy-hero { margin: -4rem -20px 3rem; padding: 2rem 20px 2rem; } }
+.therapy-hero h1 span.therapy-hero__place { display: block; margin-top: .9rem; color: inherit; font-size: clamp(1.25rem, 2vw, 1.75rem); line-height: 1.2; letter-spacing: -.02em; font-weight: 500; }
+/* La imagen ocupa la franja de color de arriba abajo; la altura la marca el texto */
+.therapy-hero { position: relative; }
+.therapy-hero .therapy-hero__img { position: absolute; top: 0; bottom: 0; right: clamp(20px, 5.5vw, 96px); width: auto; max-width: 21rem; height: 100%; margin: 0; object-fit: contain; object-position: right center; }
+@media (max-width: 940px) { .therapy-hero .therapy-hero__img { position: static; width: auto; height: 15rem; margin: 0 0 -2rem; } }
+.therapy-hero h1 { margin-top: 1.25rem; }
+.therapy-hero { align-items: center; }
+.therapies-layout--single { padding-top: 0; }
+.therapies-index a[aria-current="page"] { background: var(--area, var(--blue)); color: var(--white); }
+.therapy-more { margin-top: clamp(3rem, 6vw, 5rem); padding-top: 2rem; border-top: 1px solid var(--ink); }
+.therapy-more ul { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+.therapy-more a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .55rem 1.1rem; border: 1px solid var(--area); border-radius: 100px; font-size: .9375rem; font-weight: 600; text-decoration: none; }
+.therapy-more a:hover, .therapy-more a:focus-visible { background: var(--area); color: var(--white); }
+/* Escritorio: menú vertical a la izquierda. Móvil y tablet: "Otras terapias" abajo */
+@media (min-width: 941px) { .therapy-more { display: none; } }
+@media (max-width: 940px) { .therapies-layout--single .therapies-index { display: none; } }
+
+/* Verdes algo más oscuros donde llevan texto blanco, para que se lea bien */
+.interior-cta.therapy--olive, .therapy-hero.therapy--olive, .therapy-links .index--olive, .therapies-index .index--olive a[aria-current="page"] { --area-solid: #6B7C47; }
+.interior-cta.therapy--teal, .therapy-hero.therapy--teal, .therapy-links .index--teal, .therapies-index .index--teal a[aria-current="page"] { --area-solid: #268185; }
+.therapy-hero { background: var(--area-solid, var(--area)); }
+.therapies-index a[aria-current="page"] { background: var(--area-solid, var(--area, var(--blue))); }
+
+/* Texto de cada terapia: apartados con subtítulo */
+.therapy--single > :first-child { margin-top: 0; }
+.therapy--single h2 { margin: 3rem 0 1rem; font-size: clamp(1.5rem, 2.4vw, 2.25rem); line-height: 1.1; letter-spacing: -.035em; }
+.therapy--single h2 + p { max-width: 44rem; margin-bottom: 1.2rem; font-size: 1.0625rem; line-height: 1.65; letter-spacing: normal; }
+.therapy--single h3 { margin-top: 1.75rem; }
+.therapy ul { margin: 0 0 1.2rem; padding-left: 1.4rem; }
+.therapy--single a { text-underline-offset: .2em; }
+
+/* Bloque gris: autorización para el tratamiento de menores */
+.therapy-note { margin-top: 3rem; padding: clamp(1.5rem, 3vw, 2.5rem); border-radius: 1rem; background: var(--cream); scroll-margin-top: calc(var(--header-height) + 1rem); }
+.therapy-note h2 { margin-top: 0; color: var(--ink); }
+
+/* Página de entrada: una tarjeta por terapia */
+.therapy-links { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1.25rem; margin: clamp(3rem, 6vw, 5rem) 0 0; padding: 0; list-style: none; }
+.therapy-links li { scroll-margin-top: calc(var(--header-height) + 1rem); }
+.therapy-links a { display: flex; flex-direction: column; gap: .75rem; height: 100%; min-height: 13rem; padding: clamp(1.5rem, 2.5vw, 2rem); border-radius: 1rem; background: var(--area-solid, var(--area)); color: var(--white); text-decoration: none; transition: transform .3s ease, box-shadow .3s ease; }
+.therapy-links a:hover, .therapy-links a:focus-visible { transform: translateY(-3px); box-shadow: 0 1rem 2rem -1rem rgba(31, 36, 42, .45); }
+.therapy-links h2 { margin: 0; font-size: clamp(1.5rem, 2.2vw, 2rem); line-height: 1.1; letter-spacing: -.035em; font-weight: 650; }
+.therapy-links p { margin: 0; font-size: 1rem; line-height: 1.5; }
+.therapy-links__arrow { margin-top: auto; font-size: 1.5rem; }
+@media (prefers-reduced-motion: reduce) { .therapy-links a { transition: none; } .therapy-links a:hover, .therapy-links a:focus-visible { transform: none; } }
+/* El texto del cabecero usa todo el ancho que deja libre la imagen */
+@media (min-width: 941px) { .interior-intro.therapy-hero { grid-template-columns: minmax(0, 1fr); } .therapy-hero > div { padding-right: 24rem; } }
+/* Todas las terapias: el cabecero ocupa el alto de la pantalla menos el header y la imagen crece con él */
+@media (min-width: 941px) {
+  .interior-intro.therapy-hero { min-height: calc(100svh - var(--header-height)); align-content: center; }
+  .interior-intro.therapy-hero > div { padding-right: calc(45% + 2rem); }
+  .therapy-hero .therapy-hero__img { width: 40%; max-width: none; height: 100%; object-fit: contain; object-position: center bottom; }
+}
+@media (max-width: 940px) {
+  .therapy-hero .therapy-hero__img { width: 100%; height: auto; max-width: 34rem; max-height: 60svh; object-fit: contain; object-position: left bottom; margin: 0 0 -2rem; }
+}
+
+/* Contacto: tarjetas de colores que entran una a una */
+.contact-grid--cards { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1rem, 2vw, 1.5rem); align-items: stretch; }
+.contact-cards { display: grid; gap: clamp(1rem, 2vw, 1.5rem); }
+.contact-card { --card: var(--blue); position: relative; display: flex; flex-direction: column; align-items: flex-start; padding: clamp(1.5rem, 2.5vw, 2.25rem); border-radius: 1rem; background: var(--card); color: var(--black); text-decoration: none; transition: translate .4s cubic-bezier(.2, .8, .2, 1), box-shadow .4s ease; }
+/* Tonos claros de la marca para que el texto negro se lea bien */
+.contact-card--clay { --card: #CE6E5A; }
+.contact-card--blue { --card: #5B97C7; }
+.contact-card--teal { --card: #2B9397; }
+.contact-card--olive { --card: #819656; }
+.contact-card__icon { display: grid; place-items: center; width: clamp(3.25rem, 4.5vw, 4.25rem); aspect-ratio: 1; margin-bottom: 1.4rem; border-radius: 50%; background: var(--black); color: var(--card); transition: rotate .4s cubic-bezier(.34, 1.56, .64, 1); }
+.contact-card__icon svg { width: 46%; height: auto; }
+.contact-card__label { margin-bottom: .5rem; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.contact-card__value { margin: 0; font-size: clamp(1.25rem, 2vw, 1.875rem); font-weight: 600; line-height: 1.25; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.contact-card--blue .contact-card__value { word-spacing: .2em; }
+.contact-card__arrow { position: absolute; top: clamp(1.25rem, 2.2vw, 2rem); right: clamp(1.25rem, 2.2vw, 2rem); font-size: 1.5rem; line-height: 1; transition: translate .4s cubic-bezier(.2, .8, .2, 1); }
+a.contact-card:hover, a.contact-card:focus-visible { translate: 0 -6px; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .45); }
+.contact-card:hover .contact-card__icon { rotate: -12deg; }
+a.contact-card:hover .contact-card__arrow, a.contact-card:focus-visible .contact-card__arrow { translate: 4px -4px; }
+.contact-card__social { display: flex; gap: .6rem; margin: .25rem 0 0; padding: 0; list-style: none; }
+.contact-card__social a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 50%; background: rgba(0, 0, 0, .12); color: var(--black); transition: background-color .3s ease, color .3s ease, translate .3s ease; }
+.contact-card__social a:hover, .contact-card__social a:focus-visible { background: var(--black); color: var(--card); translate: 0 -3px; }
+.contact-card__social svg { width: auto; height: 1.15rem; }
+.contact-visit { justify-content: space-between; gap: 2rem; }
+.contact-visit__block { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+.contact-visit__block + .contact-visit__block { padding-top: 2rem; border-top: 1px solid rgba(0, 0, 0, .35); }
+.contact-visit__map { display: inline-flex; gap: .4rem; margin-top: 1.2rem; padding: .7rem 1.2rem; border-radius: 999px; background: var(--black); color: var(--white); font-size: 1rem; font-weight: 700; text-decoration: none; transition: background-color .3s ease, color .3s ease; }
+.contact-visit__map span { transition: translate .3s ease; }
+.contact-visit__map:hover, .contact-visit__map:focus-visible { background: var(--white); color: var(--black); }
+.contact-visit__map:hover span, .contact-visit__map:focus-visible span { translate: 3px -3px; }
+.contact-visit__status { display: inline-flex; align-items: center; gap: .55rem; margin: 0 0 .9rem; padding: .4rem .85rem; border-radius: 999px; background: rgba(0, 0, 0, .1); font-size: .875rem; font-weight: 700; }
+.contact-visit__status::before { content: ""; width: .6rem; height: .6rem; border-radius: 50%; background: rgba(0, 0, 0, .45); }
+.contact-visit__status[data-state="open"]::before { background: #1E6B1E; box-shadow: 0 0 0 0 rgba(30, 107, 30, .6); animation: contact-pulse 1.8s ease-out infinite; }
+@keyframes contact-pulse { to { box-shadow: 0 0 0 .55rem rgba(30, 107, 30, 0); } }
+.reveal-group .contact-card__icon { scale: .3; opacity: 0; }
+.reveal-group.is-in .contact-card__icon { scale: 1; opacity: 1; transition: scale .7s cubic-bezier(.34, 1.56, .64, 1) calc(var(--seq-delay, 0ms) + 350ms), opacity .4s ease calc(var(--seq-delay, 0ms) + 350ms), rotate .4s cubic-bezier(.34, 1.56, .64, 1); }
+@media (max-width: 940px) { .contact-grid--cards { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .contact-card, .contact-card__icon, .contact-card__arrow { transition: none; } .contact-visit__status::before { animation: none; } }
+
+/* Texto corrido en gris #666 (solo sobre fondo blanco o gris claro); titulares, negritas, enlaces y entradillas en negro */
+.interior-intro > p, .therapy--single > p, .therapy--single > :is(ul, ol) li, .therapy-note p, .therapy-note li, .faq-layout__intro p, .faq-item__body > p, .faq-item__body > ul:not(.faq-tags) li, .for-you-block__text p, .for-you-group li, .legal p, .legal li { color: #666; }
+:is(.therapy--single, .therapy-note, .faq-item__body, .for-you-block__text, .for-you-copy__text, .for-you-group, .legal) :is(strong, b), .therapy__lead, .therapy--single p a:not([class]), .therapy-note a:not([class]) { color: var(--ink); }
+/* En cada terapia, el CTA final toma el color de la terapia */
+.interior-cta--blue[class*="therapy--"] { background: var(--area-solid, var(--area)); }
+
+/* Para ti: el texto de presentación va en una franja negra de lado a lado, con texto blanco a todo el ancho */
+.for-you-copy { margin: 0 calc(-1 * clamp(20px, 5.5vw, 96px)); padding: clamp(3rem, 6vw, 6rem) clamp(20px, 5.5vw, 96px); background: var(--black); color: var(--white); }
+.for-you-copy .for-you-copy__text { max-width: none; }
+.for-you-copy .for-you-copy__text p { margin-bottom: 1.5rem; color: #999; font-size: clamp(1.125rem, 1.6vw, 1.5rem); line-height: 1.55; letter-spacing: -.02em; text-wrap: pretty; }
+.for-you-copy .for-you-copy__text p:first-child { margin-bottom: clamp(2.5rem, 4vw, 3.5rem); color: var(--white); }
+.for-you-copy .for-you-copy__text strong { color: var(--white); }
+.for-you-copy .for-you-copy__text p:last-child { margin-bottom: 0; }
+.for-you-copy .for-you-copy__text p:first-child { font-size: clamp(1.6rem, 2.7vw, 2.5rem); line-height: 1.35; font-weight: 600; letter-spacing: -.025em; }
+.interior-intro:has(+ .for-you-copy), .for-you-copy + .for-you-block { border: 0; }
+@media (max-width: 650px) { .for-you-copy { margin-inline: -20px; padding: 2.5rem 20px; } }
+/* Frase pequeña debajo del titular */
+.interior-intro__sub { max-width: 34rem; margin: 1.5rem 0 0; color: #666; font-size: clamp(1.1rem, 1.45vw, 1.4rem); line-height: 1.55; }
+/* Contacto: imagen vertical a la derecha, centrada con el texto y sin pasarse de alto */
+.interior-intro--portrait { align-items: center; }
+.interior-intro--portrait .interior-intro__img { width: clamp(200px, 22vw, 380px); margin-bottom: 0; }
+/* En escritorio la imagen ocupa todo el alto: desde arriba de la página hasta la línea donde empieza la siguiente sección */
+@media (min-width: 941px) {
+  .interior-intro--portrait { position: relative; }
+  .interior-intro--portrait:has(.interior-intro__img) { grid-template-columns: minmax(0, 1fr); }
+  .interior-intro--portrait .interior-intro__img { position: absolute; right: 0; top: calc(-1 * clamp(2.5rem, 4vw, 4rem)); width: auto; max-width: 34%; height: calc(100% + clamp(2.5rem, 4vw, 4rem)); object-fit: contain; object-position: right bottom; }
+}
+@media (max-width: 940px) { .interior-intro--portrait .interior-intro__img { width: min(70%, 340px); } }
+/* Contacto: cabecera en franja negra de lado a lado, pegada al menú */
+.interior-intro--portrait { margin: calc(-1 * clamp(2.5rem, 4vw, 4rem)) calc(-1 * clamp(20px, 5.5vw, 96px)) 0; padding: clamp(2.5rem, 4vw, 4rem) clamp(20px, 5.5vw, 96px) clamp(3rem, 6vw, 6rem); border-bottom: 0; background: var(--black); color: var(--white); }
+.interior-intro--portrait h1 { color: var(--white); }
+.interior-intro--portrait h1 span:not(.reveal-word) { color: #5B97C7; }
+.interior-intro--portrait .interior-intro__sub { color: #999; }
+/* En escritorio ocupa toda la pantalla menos el menú, con texto e imagen centrados en altura */
+@media (min-width: 941px) {
+  .interior-intro--portrait { min-height: calc(100svh - var(--header-height)); padding-block: clamp(2.5rem, 4vw, 4rem); align-content: center; }
+  .interior-intro--portrait:has(.interior-intro__img) { grid-template-columns: minmax(0, 1fr) auto; }
+  .interior-intro--portrait .interior-intro__img { position: static; width: min(32vw, 600px, calc(100svh - var(--header-height) - 8rem)); max-width: none; height: auto; }
+}
+@media (max-width: 650px) { .interior-intro--portrait { margin-inline: -20px; padding-inline: 20px; } }

@@ -53,25 +53,31 @@ if (scene && 'IntersectionObserver' in window) {
   observer.observe(scene);
 }
 
-const contactForm = document.querySelector('[data-mailto-form]');
-if (contactForm) {
-  contactForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const data = new FormData(contactForm);
-    const lines = [
-      `Nombre: ${data.get('nombre') || ''}`,
-      `Correo: ${data.get('correo') || ''}`,
-      `Teléfono: ${data.get('telefono') || ''}`,
-      '',
-      String(data.get('mensaje') || '')
-    ];
-    const subject = encodeURIComponent('Consulta desde la web de Psicólogos Langreo');
-    const body = encodeURIComponent(lines.join('\n'));
-    window.location.href = `mailto:${contactForm.dataset.recipient}?subject=${subject}&body=${body}`;
-  });
+// Contacto: indica si la consulta está abierta ahora (hora de Madrid)
+const openStatus = document.querySelector('[data-open-status]');
+if (openStatus) {
+  const updateStatus = () => {
+    const parts = Object.fromEntries(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Madrid', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date()).map(part => [part.type, part.value]));
+    const day = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].indexOf(parts.weekday);
+    const minutes = Number(parts.hour) * 60 + Number(parts.minute);
+    const weekday = day >= 1 && day <= 5;
+    const open = weekday && ((minutes >= 540 && minutes < 780) || (minutes >= 960 && minutes < 1170));
+    let text = 'Abierto ahora';
+    if (!open) {
+      if (weekday && minutes < 540) text = 'Cerrado · abrimos hoy a las 9:00';
+      else if (weekday && minutes < 960) text = 'Cerrado · abrimos hoy a las 16:00';
+      else if ((day >= 1 && day <= 4) || day === 0) text = 'Cerrado · abrimos mañana a las 9:00';
+      else text = 'Cerrado · abrimos el lunes a las 9:00';
+    }
+    openStatus.textContent = text;
+    openStatus.dataset.state = open ? 'open' : 'closed';
+    openStatus.hidden = false;
+  };
+  updateStatus();
+  setInterval(updateStatus, 60000);
 }
 
-const revealTitles = document.querySelectorAll('.hero h1, .statement p, .section-heading h2, .about h2, .modalities h2, .pricing__intro h2, .location h2, .location__call > p, .interior-intro h1, .therapy h2, .interior-cta p, .for-you-block__title');
+const revealTitles = document.querySelectorAll('.hero__title, .statement p, .section-heading__title, .about__title, .modalities h2, .pricing__intro h2, .location h2, .location__call > p, .interior-intro h1, .therapy h2, .interior-cta p, .for-you-block__title');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (revealTitles.length && 'IntersectionObserver' in window && !reduceMotion) {
   revealTitles.forEach(title => {
@@ -145,7 +151,11 @@ const revealImages = [
   ['.service-card:nth-child(3) .service-card__img', 'up'],
   ['.service-card:nth-child(4) .service-card__img', 'left'],
   ['.about__photo img:not(.ai-badge)', 'zoom-out'],
-  ['.interior-intro__img', 'up']
+  ['.interior-intro__img', 'up'],
+  // Páginas de cada terapia: los bloques de texto aparecen al llegar a ellos
+  ['.therapy--single > :not(h2):not(aside), .therapy-note > :not(h2)', 'text'],
+  // Pedir ayuda: cada párrafo de la franja negra aparece al llegar a él
+  ['.for-you-copy__text > p', 'text']
 ];
 if ('IntersectionObserver' in window && !reduceMotion) {
   const imageObserver = new IntersectionObserver(entries => {
@@ -160,15 +170,19 @@ if ('IntersectionObserver' in window && !reduceMotion) {
     document.querySelectorAll(selector).forEach(image => {
       image.classList.add('reveal-img');
       image.dataset.reveal = effect;
-      imageObserver.observe(image);
     });
   });
+  // El navegador calcula el estado escondido antes de observar; así la entrada siempre se anima
+  document.body.getBoundingClientRect();
+  document.querySelectorAll('.reveal-img').forEach(image => imageObserver.observe(image));
 }
 
 // Grupos que entran elemento a elemento: [contenedor, elementos, efecto, retardo entre cada uno en ms]
 const revealGroups = [
   ['.faq-layout', '.faq-layout__intro, .faq-item', 'left', 110],
-  ['.footer', '.footer__details > div > *, .footer__bottom > *', 'up', 90]
+  ['.footer', '.footer__details > div > *, .footer__bottom > *', 'up', 90],
+  ['.therapies-layout--single .therapies-index', '.section-index, li', 'left', 140],
+  ['.contact-grid--cards', '.contact-card', 'up', 120]
 ];
 if ('IntersectionObserver' in window && !reduceMotion) {
   const groupObserver = new IntersectionObserver(entries => {
@@ -193,7 +207,8 @@ if ('IntersectionObserver' in window && !reduceMotion) {
         item.style.setProperty('--seq-delay', i * step + 'ms');
       });
       group.classList.add('reveal-group');
-      groupObserver.observe(group);
     });
   });
+  document.body.getBoundingClientRect();
+  document.querySelectorAll('.reveal-group').forEach(group => groupObserver.observe(group));
 }

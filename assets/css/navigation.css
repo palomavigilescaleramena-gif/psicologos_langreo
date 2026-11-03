@@ -52,3 +52,13 @@
   .nav, .menu-toggle span { transition: none; }
   .menu-open .nav > * { animation: none; }
 }
+
+/* Menú hamburguesa: fondo azul corporativo y texto blanco */
+@media (max-width: 1200px) {
+  html.js .nav { background: var(--blue); color: var(--white); }
+  html.js .nav a, html.js .nav-group summary { color: var(--white); }
+  html.js .nav > a:hover, html.js .nav > a:focus-visible, html.js .nav-group summary:hover, html.js .nav-group[open] summary, html.js .nav-submenu a:hover, html.js .nav-submenu a:focus-visible { color: var(--white); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+  html.js .nav-submenu { background: transparent; }
+  html.js .nav > a, html.js .nav-group summary, html.js .nav-submenu a { font-weight: 500; }
+  html.js .nav a:focus-visible, html.js .nav-group summary:focus-visible { outline: 2px solid var(--white); outline-offset: 3px; }
+}
