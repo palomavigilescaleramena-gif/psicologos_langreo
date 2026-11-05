@@ -8,4 +8,4 @@
 - Gris claro `#EFEFEF` (`--cream`): fondo del header y del menú móvil, elegido por Paloma el 24/10/2026 (el crema cálido no casaba con el azul).
 - Icono de teléfono de la sección Contacto: icono "call" de [Material Symbols](https://fonts.google.com/icons) (Google), licencia Apache 2.0, insertado como SVG en línea.
 - Icono "AI MODIFIED" en `assets/img/iconos/ia-modificada.svg`: icono oficial de la Comisión Europea para etiquetar contenido modificado con IA (variante negra 50 % transparente, recortado el margen vacío). Fuente: https://digital-strategy.ec.europa.eu/en/policies/eu-icons-labelling-ai-generated-content
-- Iconos de Facebook e Instagram (página Escríbenos): [Font Awesome Free](https://fontawesome.com/) 6.5.1, iconos con licencia CC BY 4.0. Copia en `assets/img/iconos/redes/`; en la web van como SVG en línea.
+- Iconos de Facebook e Instagram (página Escríbenos): [Font Awesome Free](https://fontawesome.com/) 6.5.1, iconos con licencia CC BY 4.0. En la web van como SVG en línea.
