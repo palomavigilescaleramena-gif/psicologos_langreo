@@ -23,7 +23,7 @@
 .therapies-index ol { margin: 1.4rem 0 0; padding: 0; list-style: none; }
 .therapies-index li { border-top: 1px solid rgba(31, 36, 42, .15); }
 .therapies-index a { display: block; margin-inline: -.75rem; padding: .7rem .75rem; font-size: 1.0625rem; font-weight: 600; text-decoration: none; }
-.therapies-index a:hover, .therapies-index a:focus-visible { background: var(--area, var(--blue)); color: var(--white); }
+.therapies-index a:hover, .therapies-index a:focus-visible { background: var(--area-solid, var(--area, var(--blue))); color: var(--white); }
 .therapy { padding: clamp(2.5rem, 5vw, 4.5rem) 0; border-top: 1px solid var(--ink); scroll-margin-top: 1.5rem; }
 .therapy:first-child { padding-top: 0; border-top: 0; }
 .therapy h2 { margin: 0 0 2rem; font-size: clamp(2.25rem, 4.5vw, 4.5rem); line-height: 1; letter-spacing: -.05em; font-weight: 650; }
@@ -146,14 +146,14 @@
 .therapy-more { margin-top: clamp(3rem, 6vw, 5rem); padding-top: 2rem; border-top: 1px solid var(--ink); }
 .therapy-more ul { display: flex; flex-wrap: wrap; gap: .6rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
 .therapy-more a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .55rem 1.1rem; border: 1px solid var(--area); border-radius: 100px; font-size: .9375rem; font-weight: 600; text-decoration: none; }
-.therapy-more a:hover, .therapy-more a:focus-visible { background: var(--area); color: var(--white); }
+.therapy-more a:hover, .therapy-more a:focus-visible { background: var(--area-solid, var(--area)); color: var(--white); }
 /* Escritorio: menú vertical a la izquierda. Móvil y tablet: "Otras terapias" abajo */
 @media (min-width: 941px) { .therapy-more { display: none; } }
 @media (max-width: 940px) { .therapies-layout--single .therapies-index { display: none; } }
 
 /* Verdes algo más oscuros donde llevan texto blanco, para que se lea bien */
-.interior-cta.therapy--olive, .therapy-hero.therapy--olive, .therapy-links .index--olive, .therapies-index .index--olive a[aria-current="page"] { --area-solid: #6B7C47; }
-.interior-cta.therapy--teal, .therapy-hero.therapy--teal, .therapy-links .index--teal, .therapies-index .index--teal a[aria-current="page"] { --area-solid: #268185; }
+.interior-cta.therapy--olive, .therapy-hero.therapy--olive, .therapy-more .index--olive, .therapy-links .index--olive, .therapies-index .index--olive a[aria-current="page"], .therapies-index .index--olive a:hover, .therapies-index .index--olive a:focus-visible { --area-solid: #6B7C47; }
+.interior-cta.therapy--teal, .therapy-hero.therapy--teal, .therapy-more .index--teal, .therapy-links .index--teal, .therapies-index .index--teal a[aria-current="page"], .therapies-index .index--teal a:hover, .therapies-index .index--teal a:focus-visible { --area-solid: #268185; }
 .therapy-hero { background: var(--area-solid, var(--area)); }
 .therapies-index a[aria-current="page"] { background: var(--area-solid, var(--area, var(--blue))); }
 
