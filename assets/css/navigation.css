@@ -22,7 +22,6 @@
   .nav-group summary { width: 100%; }
   .nav-submenu, .nav-submenu--right { position: static; width: 100%; min-width: 0; display: flex; align-items: center; gap: .35rem; margin: .5rem 0 .25rem; padding: .2rem 0 0; border: 0; border-radius: 0; box-shadow: none; }
   .nav-submenu a { padding: .45rem .8rem; font-size: 1rem; text-transform: uppercase; white-space: normal; }
-  .menu-open .mobile-call { opacity: 0; pointer-events: none; }
   .menu-open .nav > * { animation: nav-appear .45s both; }
   .menu-open .nav > :nth-child(1) { animation-delay: .05s; }
   .menu-open .nav > :nth-child(2) { animation-delay: .11s; }
