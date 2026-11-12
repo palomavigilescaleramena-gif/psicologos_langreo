@@ -79,3 +79,21 @@
 @media (prefers-reduced-motion: reduce) {
   .nav-group[open] .nav-submenu, .nav-group[open] .nav-submenu a { animation: none; }
 }
+
+/* Menú móvil y tableta: enlaces a la izquierda con separadores y contacto al pie (corrección del jurado, 12/11/2026) */
+.nav-contact { display: none; }
+@media (max-width: 1200px) {
+  html.js .nav { align-items: stretch; gap: 0; padding: clamp(.75rem, 2.5vh, 1.75rem) clamp(1.25rem, 5.5vw, 3rem) 1.5rem; }
+  html.js .nav > * { width: 100%; max-width: 40rem; margin-inline: auto; }
+  html.js .nav > a, html.js .nav-group { border-bottom: 1px solid rgba(255, 255, 255, .3); }
+  html.js .nav > a, html.js .nav-group summary { display: flex; justify-content: space-between; align-items: center; padding: .9rem 0; font-size: clamp(1.5rem, 6vw, 2.25rem); text-align: left; }
+  html.js .nav-group summary::after { content: "+"; font-weight: 300; line-height: 1; }
+  html.js .nav-group[open] summary::after { content: "−"; }
+  html.js .nav-submenu, html.js .nav-submenu--right { align-items: flex-start; margin: 0 0 .9rem; padding: 0; }
+  html.js .nav-submenu a { padding: .45rem 0; text-align: left; }
+  html.js .nav > .nav-contact { display: flex; flex-direction: column; align-items: stretch; gap: .9rem; margin-top: auto; padding-top: 2rem; border: 0; }
+  html.js .nav .nav-contact__call { display: flex; justify-content: center; align-items: center; padding: 1rem 1.5rem; border-radius: 999px; background: var(--white); color: var(--blue); font-size: 1.0625rem; font-weight: 700; text-decoration: none; text-transform: none; letter-spacing: 0; }
+  html.js .nav .nav-contact__call:hover { color: var(--blue); text-decoration: underline; }
+  html.js .nav .nav-contact__mail { align-self: center; font-size: 1rem; font-weight: 500; text-decoration: underline; text-underline-offset: .2em; text-transform: none; letter-spacing: 0; }
+  html.js .nav-contact p { margin: 0; font-size: .9375rem; text-align: center; color: var(--white); }
+}
