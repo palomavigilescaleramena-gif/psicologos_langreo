@@ -30,6 +30,49 @@ navGroups.forEach(group => group.addEventListener('toggle', () => {
   if (group.open) navGroups.forEach(other => { if (other !== group) other.open = false; });
 }));
 
+// Preguntas frecuentes (hipnosis y página de preguntas): abren y cierran con transición, y solo una abierta a la vez
+const faqMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+document.querySelectorAll('.therapy-faq, .faq-list').forEach(group => {
+  const items = [...group.querySelectorAll('details.faq-item')];
+  // Sin name: el navegador cerraría las demás de golpe; lo controlamos aquí para animarlo
+  items.forEach(item => item.removeAttribute('name'));
+
+  const animate = (item, opening) => {
+    const summary = item.querySelector('summary');
+    const start = item.getBoundingClientRect().height;
+    item.faqAnimation?.cancel();
+    item.classList.toggle('is-closing', !opening);
+    if (faqMotion.matches) { item.open = opening; item.classList.remove('is-closing'); return; }
+    if (opening) item.open = true;
+    const borders = item.offsetHeight - item.clientHeight;
+    const end = opening ? item.scrollHeight + borders : summary.offsetHeight + borders;
+    item.style.overflow = 'hidden';
+    const animation = item.animate({ height: [`${start}px`, `${end}px`] }, { duration: 400, easing: 'cubic-bezier(.4, 0, .2, 1)' });
+    item.faqAnimation = animation;
+    animation.onfinish = () => {
+      if (!opening) item.open = false;
+      item.classList.remove('is-closing');
+      item.style.overflow = '';
+      item.faqAnimation = null;
+    };
+  };
+
+  const isOpen = item => item.open && !item.classList.contains('is-closing');
+
+  items.forEach(item => item.querySelector('summary').addEventListener('click', event => {
+    event.preventDefault();
+    const opening = !isOpen(item);
+    if (opening) items.forEach(other => { if (other !== item && isOpen(other)) animate(other, false); });
+    animate(item, opening);
+  }));
+});
+
+// Desplegables con el mismo name: solo uno abierto a la vez (también en navegadores antiguos)
+document.querySelectorAll('details[name]').forEach(item => item.addEventListener('toggle', () => {
+  if (!item.open) return;
+  document.querySelectorAll(`details[name="${item.getAttribute('name')}"]`).forEach(other => { if (other !== item) other.open = false; });
+}));
+
 document.addEventListener('keydown', event => {
   if (event.key !== 'Escape') return;
   closeMenu();
@@ -77,8 +120,107 @@ if (openStatus) {
   setInterval(updateStatus, 60000);
 }
 
-const revealTitles = document.querySelectorAll('.hero__title, .statement p, .section-heading__title, .about__title, .modalities h2, .pricing__intro h2, .location h2, .location__call > p, .interior-intro h1, .therapy h2, .interior-cta p, .for-you-block__title');
+const revealTitles = document.querySelectorAll('.statement p, .section-heading__title, .about__title, .modalities h2, .pricing__intro h2, .location h2, .location__call > p, .interior-intro h1, .therapy h2, .interior-cta p, .for-you-block__title');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Titular de portada: las letras de cada palabra empiezan cambiadas de sitio (se lee como un texto normal sin sentido)
+// y luego viajan a su posición, unas por arriba y otras por abajo, letra a letra y las tres filas a la vez
+const scrambleTitle = document.querySelector('.hero__title');
+if (scrambleTitle && !reduceMotion && 'animate' in Element.prototype) {
+  const originalHTML = scrambleTitle.innerHTML;
+  const fullText = scrambleTitle.textContent.replace(/\s+/g, ' ').trim();
+  const words = [];
+  const chars = [];
+  scrambleTitle.setAttribute('aria-label', fullText);
+  scrambleTitle.style.visibility = 'hidden';
+  const walker = document.createTreeWalker(scrambleTitle, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+  textNodes.forEach(node => {
+    const fragment = document.createDocumentFragment();
+    node.textContent.split(/(\s+)/).forEach(part => {
+      if (!part) return;
+      if (/^\s+$/.test(part)) { fragment.append(part); return; }
+      const word = document.createElement('span');
+      word.className = 'scramble-word';
+      word.setAttribute('aria-hidden', 'true');
+      const wordChars = [...part].map(letter => {
+        const char = document.createElement('span');
+        char.className = 'scramble-char';
+        char.textContent = letter;
+        char.isLetter = /\p{L}/u.test(letter);
+        word.append(char);
+        chars.push(char);
+        return char;
+      });
+      words.push(wordChars);
+      fragment.append(word);
+    });
+    node.replaceWith(fragment);
+  });
+
+  const shuffle = list => {
+    const copy = [...list];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  };
+
+  const start = () => {
+    // Orden desordenado de cada palabra: las letras se barajan entre los huecos de letra; la puntuación no se mueve
+    words.forEach(wordChars => {
+      const letters = wordChars.filter(char => char.isLetter);
+      let mixed = shuffle(letters);
+      for (let tries = 0; tries < 6 && letters.length > 1 && mixed.every((char, i) => char.textContent === letters[i].textContent); tries++) mixed = shuffle(letters);
+      let k = 0;
+      const scrambledOrder = wordChars.map(char => (char.isLetter ? mixed[k++] : char));
+      const widths = new Map(wordChars.map(char => [char, char.getBoundingClientRect().width]));
+      let x = 0;
+      const finalLeft = new Map(wordChars.map(char => { const left = x; x += widths.get(char); return [char, left]; }));
+      x = 0;
+      scrambledOrder.forEach(char => {
+        char.dx = x - finalLeft.get(char);
+        x += widths.get(char);
+      });
+    });
+
+    // Cada letra empieza en un momento al azar y tarda un tiempo distinto: no salen a la vez ni llegan a la vez
+    const hold = 1200;                       // ms con el texto sin sentido quieto, para que dé tiempo a verlo
+    const startSpread = 800;                 // ms en los que se reparten al azar las salidas de las letras
+    const minDuration = 450, maxDuration = 950; // ms que tarda cada letra en llegar a su sitio (al azar entre ambos)
+    const lift = .55;                        // altura media del arco, en em
+    let lastEnd = 0;
+    const animations = chars.map(char => {
+      const dx = char.dx || 0;
+      const moving = Math.abs(dx) > .5;
+      // Cada letra elige al azar si pasa por arriba o por abajo, y con una altura algo distinta,
+      // sin depender de si va a la derecha o a la izquierda
+      const dy = moving ? (Math.random() < .5 ? -1 : 1) * lift * (.6 + Math.random() * .8) : 0;
+      const delay = hold + Math.random() * startSpread;
+      const duration = minDuration + Math.random() * (maxDuration - minDuration);
+      lastEnd = Math.max(lastEnd, delay + duration);
+      return char.animate([
+        { transform: `translate(${dx}px, 0)` },
+        { transform: `translate(${dx / 2}px, ${dy}em)`, offset: .5 },
+        { transform: 'translate(0, 0)' }
+      ], { duration, delay, easing: 'cubic-bezier(.45, 0, .2, 1)', fill: 'backwards' });
+    });
+    scrambleTitle.style.visibility = '';
+    Promise.all(animations.map(animation => animation.finished)).catch(() => {}).then(() => {
+      scrambleTitle.innerHTML = originalHTML;
+      scrambleTitle.removeAttribute('aria-label');
+    });
+  };
+
+  // Medimos con la tipografía ya cargada; si tarda, se mide igualmente para no dejar el titular oculto
+  let started = false;
+  const go = () => { if (!started) { started = true; start(); } };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(go);
+  setTimeout(go, 800);
+  if (!document.fonts) go();
+}
 if (revealTitles.length && 'IntersectionObserver' in window && !reduceMotion) {
   revealTitles.forEach(title => {
     title.setAttribute('aria-label', title.textContent.replace(/\s+/g, ' ').trim());

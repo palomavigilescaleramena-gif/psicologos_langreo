@@ -13,9 +13,11 @@
 @media (max-width: 1200px) {
   .site-header__inner { gap: 1rem; }
   .menu-toggle { display: flex; flex-direction: column; justify-content: center; gap: .4rem; margin-left: auto; width: 2.75rem; height: 2.75rem; background: transparent; border: 0; z-index: 100; cursor: pointer; }
-  .menu-toggle span { display: block; width: 1.65rem; height: 2px; background: var(--ink); transition: transform .3s ease; }
-  .menu-open .menu-toggle span:first-child { transform: translateY(.25rem) rotate(45deg); }
-  .menu-open .menu-toggle span:last-child { transform: translateY(-.25rem) rotate(-45deg); }
+  /* Tres líneas; al abrir, la de en medio desaparece y las otras dos forman la cruz */
+  .menu-toggle span { display: block; width: 1.65rem; height: 2px; background: var(--ink); transition: transform .3s ease, opacity .2s ease; }
+  .menu-open .menu-toggle span:first-child { transform: translateY(calc(.4rem + 2px)) rotate(45deg); }
+  .menu-open .menu-toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .menu-open .menu-toggle span:last-child { transform: translateY(calc(-.4rem - 2px)) rotate(-45deg); }
   .nav { position: fixed; inset: var(--header-height) 0 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: clamp(.75rem, 2vh, 1.35rem); margin: 0; padding: clamp(1.75rem, 5vh, 3rem) 1rem 2rem; overflow-y: auto; background: var(--white); border-top: 0; visibility: hidden; opacity: 0; transform: translateY(-.8rem); pointer-events: none; transition: visibility .4s, opacity .4s ease, transform .4s ease; z-index: 81; }
   .menu-open .nav { display: flex; visibility: visible; opacity: 1; transform: translateY(0); pointer-events: auto; }
   .nav > a, .nav-group summary { justify-content: center; font-size: clamp(1.7rem, 3vw, 2.5rem); line-height: 1.1; font-weight: 700; text-align: center; text-transform: uppercase; letter-spacing: -.035em; white-space: normal; }

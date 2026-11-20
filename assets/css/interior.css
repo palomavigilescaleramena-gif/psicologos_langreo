@@ -268,3 +268,26 @@ a.contact-card:hover .contact-card__arrow, a.contact-card:focus-visible .contact
   .interior-intro--portrait .interior-intro__img { position: static; width: min(32vw, 600px, calc(100svh - var(--header-height) - 8rem)); max-width: none; height: auto; }
 }
 @media (max-width: 650px) { .interior-intro--portrait { margin-inline: -20px; padding-inline: 20px; } }
+/* Hipnosis clínica: frase destacada y preguntas desplegables */
+.therapy-quote { max-width: 44rem; margin: 2rem 0; padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.25rem); border-left: 4px solid var(--area, var(--blue)); border-radius: 0 1rem 1rem 0; background: color-mix(in srgb, var(--area, var(--blue)) 9%, var(--white)); }
+.therapy .therapy-quote p { max-width: none; margin: 0; color: var(--ink); font-size: clamp(1.3125rem, 2.2vw, 1.75rem); line-height: 1.35; font-weight: 600; font-style: italic; letter-spacing: -.02em; text-wrap: balance; }
+.therapy-faq { max-width: 44rem; margin-top: 1.5rem; }
+.therapy-faq .faq-item, .faq-list .faq-item { border-color: #ccc; }
+.therapy-faq .faq-item:first-child { border-top: 0; }
+.therapy-faq .faq-item summary { padding: 1.25rem 0; min-height: 44px; font-size: clamp(1.125rem, 1.6vw, 1.375rem); }
+.therapy-faq .faq-item summary span { color: var(--area, var(--blue)); }
+.faq-item.is-closing summary span { transform: none; }
+.therapy-faq .faq-item summary:focus-visible { outline: 2px solid var(--area, var(--blue)); outline-offset: 4px; }
+.therapy-faq .faq-item__body { padding-bottom: 1.5rem; }
+
+/* Cabecera con fondo de color (preguntas frecuentes): el bloque ocupa todo el ancho, como en las terapias */
+.interior-intro--tinted { margin: calc(-1 * clamp(4rem, 8vw, 8rem)) calc(-1 * clamp(20px, 5.5vw, 96px)) 0; padding: clamp(4rem, 8vw, 8rem) clamp(20px, 5.5vw, 96px) clamp(3rem, 6vw, 6rem); border-bottom: 0; background: #d5cfcb; }
+@media (max-width: 650px) { .interior-intro--tinted { margin: -4rem -20px 0; padding: 4rem 20px 3rem; } }
+
+/* Preguntas frecuentes: preguntas más pequeñas (con la letra algo más abierta) y botones de terapias compactos en una línea */
+.faq-list .faq-item summary { padding: 1.25rem 0; font-size: clamp(1.125rem, 1.6vw, 1.375rem); letter-spacing: -.015em; }
+.faq-list .faq-item__body .faq-tags { gap: .375rem; }
+.faq-list .faq-tags a { min-height: 32px; padding: .3rem .75rem; font-size: .8125rem; letter-spacing: .01em; line-height: 1.2; white-space: nowrap; }
+/* Respuestas de la página de preguntas frecuentes: ocupan el 90 % del ancho de la columna */
+.faq-list .faq-item__body { max-width: none; }
+.faq-list .faq-item__body > :is(p, ul) { max-width: 90%; }
