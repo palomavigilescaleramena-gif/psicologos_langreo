@@ -187,7 +187,7 @@ if (scrambleTitle && !reduceMotion && 'animate' in Element.prototype) {
     });
 
     // Cada letra empieza en un momento al azar y tarda un tiempo distinto: no salen a la vez ni llegan a la vez
-    const hold = 1200;                       // ms con el texto sin sentido quieto, para que dé tiempo a verlo
+    const hold = 0;                          // sin espera: las letras empiezan a moverse en cuanto aparece el titular
     const startSpread = 800;                 // ms en los que se reparten al azar las salidas de las letras
     const minDuration = 450, maxDuration = 950; // ms que tarda cada letra en llegar a su sitio (al azar entre ambos)
     const lift = .55;                        // altura media del arco, en em
